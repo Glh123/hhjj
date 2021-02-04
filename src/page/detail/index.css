@@ -1,3 +1,7 @@
+#root {
+  display: flex;
+  justify-content: center;
+}
 .details {
   /* margin: 20px; */
   margin-top: 20px;

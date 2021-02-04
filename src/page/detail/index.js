@@ -4,62 +4,60 @@ import { message } from 'antd';
 import qs from 'qs'
 import './index.css'
 
+const data =  ['projectName', 'exceptionClass', 'url', 'exceptionMessage', 'requestParam', 'exceptionStack', 'userInfo', 'time']
 // eslint-disable-next-line no-restricted-globals
 const query = qs.parse(location.search, { ignoreQueryPrefix: true })
 export default function Index() {
   const [detail, setDetail] = useState([])
-  
   useEffect(() =>{
-
     const getData = async () => {
       // 拿数据
      let data = await  request.get(`/red/alert/exception/msg?id=${query.id}`)
+    //  data?.forEach(item => {
+    //    if(item === 'userInfo') {
+    //      detail.userInfo = {
+    //       user_id: data.user_id,
+    //       user_name: data.user_name,
+    //       team_id: data.team_id,
+    //       team_name: data.team_name
+    //      }
+    //    }else {
+    //     detail[item] = data[item]
+    //    }
+    //  })
       setDetail(data?.data?.result)
-      console.log(detail)
     }
-
     if(!query.id) {
       message.error('参数错误')
     }
     getData()
-  }, [detail])  
+  }, [])  
   
   return (
     <div className='details'>
         <div className='title item'>项目预警</div>
+        {data.map((item, index) => {
+          return(
+            <div className='item' key={index}>
+              <div className='left'>{item}</div>
+              <div className='right'>
+                {item === 'userInfo' ? <> 
+                  <div>user_id：{detail.userId}</div>
+                  <div>user_name：{detail.userName}</div>
+                  <div>team_id：{detail.teamId}</div>
+                  <div>team_name：{detail.teamName}</div>
+                </> : detail[item]}
+              </div>
+            </div>
+          ) 
+        })}
         <div className='item'>
-          <div className='left'>项目</div>
-          <div className='right'>dataline-boot</div>
+          <div className='left'>一分钟内异常出现次数</div>
+          <div className='right'>{detail.exceptionCount}</div>
         </div>
         <div className='item'>
-          <div className='left'>exceptionClass</div>
-          <div className='right color-red'>class java.io.IOException</div>
-        </div>
-        <div className='item'>
-          <div className='left'>url</div>
-          <div className='right'>/v1-6-2/trend/sale-trend</div>
-        </div>
-        <div className='item'>
-          <div className='left'>exceptionMessage</div>
-          <div className='right'>listener timeout after waiting for [30000] ms</div>
-        </div>
-        <div className='item'>
-          <div className='left'>requestParam</div>
-          <div className='right'>{`{"shopId":331821357,"distribution":3,"granularity":1,"sbType":"","startDate":"2020-02-04","endDate":"2021-02-03"}`}</div>
-        </div>
-        <div className='item'>
-          <div className='left'>exceptionStack</div>
-          <div className='right'>{`[{"className":"org.elasticsearch.client.RestClient$SyncResponseListener","fileName":"RestClient.java","lineNumber":899,"methodName":"get",
-          "nativeMethod":false},{"className":"org.elasticsearch.client.RestClient","fileName":"RestClient.java","lineNumber":227,"methodName":"performRequest","nativeMethod":false},
-          {"className":"org.elasticsearch.client.RestHighLevelClient","fileName":"RestHighLevelClient.java","lineNumber":1764,"methodName":"internalPerformRequest","nativeMethod":false},
-          {"className":"org.elasticsearch.client.RestHighLevelClient","fileName":"RestHighLevelClient.java","lineNumber":1734,"methodName":"performRequest","nativeMethod":false},
-          {"className":"org.elasticsearch.client.RestHighLevelClient","fileName":"RestHighLevelClient.java","lineNumber":1696,"methodName":"performRequestAndParseEntity","nativeMethod":false},
-          {"className":"org.elasticsearch.client.RestHighLevelClient","fileName":"RestHighLevelClient.java","lineNumber":1092,"methodName":"search","nativeMethod":false},
-          {"className":"com.zhiyi.config.ESConfigV2","fileName":"ESConfigV2.java","lineNumber":81,"methodName":"search","nativeMethod":false}]`}</div>
-        </div>
-        <div className='item'>
-          <div className='left'>time</div>
-          <div className='right'>2021-02-04 10:05:55</div>
+          <div className='left'>扩展信息</div>
+          <div className='right'>{detail.extInfo || 'null'}</div>
         </div>
         <div className='item color-blue'>我知道了</div>
     </div>
