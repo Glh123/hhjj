@@ -4,7 +4,7 @@ import { message } from 'antd';
 import qs from 'qs'
 import './index.css'
 
-const data =  ['projectName', 'exceptionClass', 'url', 'exceptionMessage', 'requestParam', 'exceptionStack', 'userInfo', 'time']
+const data =  ['projectName', 'exceptionClass', 'url', 'exceptionMessage', 'requestParam', 'exceptionStack', 'userInfo']
 // eslint-disable-next-line no-restricted-globals
 const query = qs.parse(location.search, { ignoreQueryPrefix: true })
 export default function Index() {
@@ -32,7 +32,10 @@ export default function Index() {
     }
     getData()
   }, [])  
-  
+  const goHome = () => {
+    // eslint-disable-next-line no-restricted-globals
+    window.location.href = `${location.pathname.replace('detail', 'Home')+location.search}`
+  }
   return (
     <div className='details'>
         <div className='title item'>项目预警</div>
@@ -52,6 +55,10 @@ export default function Index() {
           ) 
         })}
         <div className='item'>
+          <div className='left'>time</div>
+          <div className='right'>{detail.exceptionTime}</div>
+        </div>
+        <div className='item'>
           <div className='left'>一分钟内异常出现次数</div>
           <div className='right'>{detail.exceptionCount}</div>
         </div>
@@ -59,7 +66,7 @@ export default function Index() {
           <div className='left'>扩展信息</div>
           <div className='right'>{detail.extInfo || 'null'}</div>
         </div>
-        <div className='item color-blue'>我知道了</div>
+        <div className='item color-blue' onClick={goHome}>我知道了</div>
     </div>
   )
 }
