@@ -28,7 +28,7 @@ const Detail = ({ value }) => {
           <span>异常类型 </span><span className='color-red'>{value?.exceptionClass}</span>
         </div>
         <div className='request-url item'>
-          <div className='left'>请求地址 </div><div className='right'>{value?.requestParam}</div>
+          <div className='left'>请求地址 </div><div className='right'>{value?.url}</div>
         </div>
         <div className='num item'>
           <span>短时间内改异常出现的次数 </span><span>{value?.exceptionCount}</span>
@@ -51,8 +51,8 @@ const Operate = () => {
       }
     </Menu>
   );
-  const [checkedList, setCheckedList] = useState([])
-  const [selectDate, setSelectData] = useState('生效时间')
+  const [checkedList, setCheckedList] = useState(['项目名称'])
+  const [selectDate, setSelectData] = useState('15分钟')
   const onChange = list => {
     setCheckedList(list);
   }
@@ -69,9 +69,11 @@ const Operate = () => {
       minutes: selectDate === '生效时间' ? '' : selectDate.indexOf('分') > -1 ? selectDate.slice(0, 2) : Number(selectDate.slice(0, 1)) * 60
     }
     const data = await request.post('/red/alert/nomore-notify', params)
-    console.log(data)
-    if (data.success) {
+    console.log(data.data.success)
+    if (data.data.success) {
       message.success('修改成功')
+    } else {
+      message.error('修改失败')
     }
   }
   function handleMenuClick (e) {
@@ -111,6 +113,10 @@ export default function Index () {
     // 拿数据
     let data = await request.get(`/red/alert/exception/msg?id=${query.id}`)
     setDetail(data?.data?.result)
+    if(data.success) {
+      console.log(1111)
+      message.success('修改成功')
+    }
   }
   return (
     <div className='all'>
