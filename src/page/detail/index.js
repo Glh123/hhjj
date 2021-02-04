@@ -8,19 +8,22 @@ import './index.css'
 const query = qs.parse(location.search, { ignoreQueryPrefix: true })
 export default function Index() {
   const [detail, setDetail] = useState([])
+  
   useEffect(() =>{
+
+    const getData = async () => {
+      // 拿数据
+     let data = await  request.get(`/red/alert/exception/msg?id=${query.id}`)
+      setDetail(data?.data?.result)
+      console.log(detail)
+    }
+
     if(!query.id) {
       message.error('参数错误')
     }
-  })  
-  useEffect(() => {
     getData()
-  },[])
-  const getData = async () => {
-    // 拿数据
-   let data = await  request.get(`/red/alert/exception/msg?id=${query.id}`)
-    setDetail(data?.data?.result)
-  }
+  }, [detail])  
+  
   return (
     <div className='details'>
         <div className='title item'>项目预警</div>
