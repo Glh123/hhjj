@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import request from '../../config/request.js'
 import { Checkbox, Menu, Dropdown, Button, message } from 'antd';
 import './index.css'
@@ -16,7 +16,7 @@ const dateList = [
 ]
 // eslint-disable-next-line no-restricted-globals
 const query = qs.parse(location.search, { ignoreQueryPrefix: true })
-const Detail = ({value}) => {
+const Detail = ({ value }) => {
   return (
     <div className='detail'>
       <div className='title'>项目预警</div>
@@ -62,15 +62,15 @@ const Operate = () => {
       isProjectName: checkedList.includes('项目名称') ? 1 : 0,
       isUrl: checkedList.includes('请求地址') ? 1 : 0,
       isExceptionClass: checkedList.includes('异常类型') ? 1 : 0,
-      minutes: selectDate === '生效时间' ? '' : selectDate.indexOf('分') > -1 ? selectDate.slice(0,2) : Number(selectDate.slice(0, 1)) * 60
+      minutes: selectDate === '生效时间' ? '' : selectDate.indexOf('分') > -1 ? selectDate.slice(0, 2) : Number(selectDate.slice(0, 1)) * 60
     }
     const data = await request.post('/red/alert/nomore-notify', params)
     console.log(data)
-    if(data.success) {
+    if (data.success) {
       message.success('修改成功')
     }
   }
-  function handleMenuClick(e) {
+  function handleMenuClick (e) {
     setSelectData(dateList.find(item => item.index === Number(e.key)).content)
   }
 
@@ -85,40 +85,31 @@ const Operate = () => {
               {selectDate} <DownOutlined />
             </Button>
           </Dropdown>
-          <div style={{ height: 10, flex: 1}}></div>
+          <div style={{ height: 10, flex: 1 }}></div>
           <Button onClick={save}> 保存 </Button>
         </div>
       </div>
     </div>
   )
 }
-  
-const Header = () => {
-  return (
-    <div className='header'>
-      知衣预警推送系统
-    </div>
-  )
-}
 
 export default function Index () {
   const [detail, setDetail] = useState([])
-  useEffect(() =>{
-    if(!query.id) {
+  useEffect(() => {
+    if (!query.id) {
       message.error('参数错误')
     }
-  })  
+  })
   useEffect(() => {
     getData()
-  },[])
+  }, [])
   const getData = async () => {
     // 拿数据
-   let data = await  request.get(`/red/alert/exception/msg?id=${query.id}`)
+    let data = await request.get(`/red/alert/exception/msg?id=${query.id}`)
     setDetail(data?.data?.result)
   }
   return (
     <div className='all'>
-      <Header />
       <Detail value={detail} />
       <Operate />
     </div>

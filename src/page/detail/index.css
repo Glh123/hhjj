@@ -1,12 +1,11 @@
 .details {
   /* margin: 20px; */
-  margin-top: 20px;
   background-color: rgba(231, 231, 235, 1);
   font-size: 14px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.749019607843137);
-  padding: 10px 0;
   max-width: 1083px;
+  padding-top: 100px;
 }
 .details .item {
   margin: 10px;
