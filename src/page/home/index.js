@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import request from '../../config/request.js'
 import { Checkbox, Menu, Dropdown, Button, message } from 'antd';
+import { Router } from 'react-router-dom'
 import './index.css'
 import 'antd/dist/antd.css'
 import qs from 'qs'
@@ -8,11 +9,11 @@ import { DownOutlined } from '@ant-design/icons';
 
 const CheckboxGroup = Checkbox.Group;
 const dateList = [
-  {content: '15分钟', index: 1},
-  {content: '30分钟', index: 2},
-  {content: '1小时', index: 3},
-  {content: '3小时', index: 4},
-  {content: '6小时', index: 5}
+  { content: '15分钟', index: 1 },
+  { content: '30分钟', index: 2 },
+  { content: '1小时', index: 3 },
+  { content: '3小时', index: 4 },
+  { content: '6小时', index: 5 }
 ]
 // eslint-disable-next-line no-restricted-globals
 const query = qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -73,7 +74,7 @@ const Operate = () => {
   function handleMenuClick(e) {
     setSelectData(dateList.find(item => item.index === Number(e.key)).content)
   }
-  
+
   return (
     <div className='operate'>
       <div className='tip'>与该条消息以下内容相同的预警信息在短时间内不再提醒</div>
@@ -92,12 +93,24 @@ const Operate = () => {
     </div>
   )
 }
-export default function Index() {
+  
+const Header = () => {
+  return (
+    <div className='header'>
+      知衣预警推送系统
+    </div>
+  )
+}
+
+export default function Index () {
   const [detail, setDetail] = useState([])
   useEffect(() =>{
     if(!query.id) {
       message.error('参数错误')
     }
+  }
+  )  
+  useEffect(() => {
     getData()
   },[])
   const getData = async () => {
@@ -107,6 +120,7 @@ export default function Index() {
   }
   return (
     <div className='all'>
+      <Header />
       <Detail value={detail} />
       <Operate />
     </div>
