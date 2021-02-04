@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 // import request from 'axios'
 import { Checkbox, Menu, Dropdown, Button, message } from 'antd';
+import { Router } from 'react-router-dom'
 import './index.css'
 import 'antd/dist/antd.css'
 import { DownOutlined } from '@ant-design/icons';
@@ -8,11 +9,11 @@ import { DownOutlined } from '@ant-design/icons';
 // const BaseUrl = '192.168.1.90'
 const CheckboxGroup = Checkbox.Group;
 const dateList = [
-  {content: '15分钟', index: 1},
-  {content: '30分钟', index: 2},
-  {content: '1小时', index: 3},
-  {content: '3小时', index: 4},
-  {content: '6小时', index: 5}
+  { content: '15分钟', index: 1 },
+  { content: '30分钟', index: 2 },
+  { content: '1小时', index: 3 },
+  { content: '3小时', index: 4 },
+  { content: '6小时', index: 5 }
 ]
 const Detail = () => {
   return (
@@ -54,11 +55,11 @@ const Operate = () => {
   const onChange = list => {
     setCheckedList(list);
   }
-  function handleMenuClick(e) {
+  function handleMenuClick (e) {
     message.info('Click on menu item.');
     setSelectData(dateList.find(item => item.index === Number(e.key)).content)
   }
-  
+
   return (
     <div className='operate'>
       <div className='tip'>与该条消息以下内容相同的预警信息在短时间内不再提醒</div>
@@ -70,19 +71,28 @@ const Operate = () => {
               {selectDate} <DownOutlined />
             </Button>
           </Dropdown>
-          <div style={{ height: 10, flex: 1}}></div>
+          <div style={{ height: 10, flex: 1 }}></div>
           <Button> 保存 </Button>
         </div>
       </div>
     </div>
   )
 }
-export default function Index() {
+
+const Header = () => {
+  return (
+    <div className='header'>
+      知衣预警推送系统
+    </div>
+  )
+}
+
+export default function Index () {
   // let params = {
 
   // }
   const [data] = useState([])
-  useEffect(() =>{
+  useEffect(() => {
     getData()
   })
   const getData = () => {
@@ -91,6 +101,7 @@ export default function Index() {
   }
   return (
     <div className='all'>
+      <Header />
       <Detail value={data} />
       <Operate />
     </div>
