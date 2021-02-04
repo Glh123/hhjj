@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import request from '../../config/request.js'
 import { Checkbox, Menu, Dropdown, Button, message } from 'antd';
-import { Router } from 'react-router-dom'
 import './index.css'
 import 'antd/dist/antd.css'
 import qs from 'qs'
