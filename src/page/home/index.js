@@ -26,7 +26,7 @@ const Detail = () => {
           <span>异常类型 </span><span className='color-red'>class java.io.IOException</span>
         </div>
         <div className='request-url item'>
-          <div className='left'>请求地址 </div><div className='right'>{'{“shopId”:12535448,“distribution”:3,“granularity ”:3,“sbType ”:“, ”“startDate”:“2020-01-31 ”,“endDate”:“2020-01-30 ”}'}</div>
+          <div className='left'>请求地址 </div><div className='right'>{' {“shopId”:12535448,“distribution”:3,“granularity ”:3,“sbType ”:“, ”“startDate”:“2020-01-31 ”,“endDate”:“2020-01-30 ”}'}</div>
         </div>
         <div className='num item'>
           <span>短时间内改异常出现的次数 </span><span>11</span>
@@ -54,6 +54,9 @@ const Operate = () => {
   const onChange = list => {
     setCheckedList(list);
   }
+  const save = () => {
+    // post
+  }
   function handleMenuClick(e) {
     message.info('Click on menu item.');
     setSelectData(dateList.find(item => item.index === Number(e.key)).content)
@@ -71,7 +74,7 @@ const Operate = () => {
             </Button>
           </Dropdown>
           <div style={{ height: 10, flex: 1}}></div>
-          <Button> 保存 </Button>
+          <Button onChange={save}> 保存 </Button>
         </div>
       </div>
     </div>

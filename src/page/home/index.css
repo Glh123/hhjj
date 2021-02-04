@@ -1,6 +1,6 @@
 .all {
   display: flex;
-  margin-top: 50px;
+  margin-top: 20px;
   font-size: 14px;
   font-weight: 400;
   align-items: center;
@@ -25,7 +25,11 @@
 }
 
 .detail .request-url .left {
-  width: 136px;
+  width: 60px;
+}
+.detail .request-url .right {
+  flex: 1;
+  word-break: break-all;
 }
 
 .operate {
@@ -49,4 +53,11 @@
 }
 .operate .content .bottom {
   display: flex;
+}
+
+@media screen and (max-width: 830px) {
+  .detail,
+  .operate {
+    width: 350px;
+  }
 }
