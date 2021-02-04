@@ -1,0 +1,52 @@
+.all {
+  display: flex;
+  margin-top: 50px;
+  font-size: 14px;
+  font-weight: 400;
+  align-items: center;
+  flex-direction: column;
+}
+.detail {
+  box-sizing: border-box;
+  width: 413px;
+  color: rgba(0, 0, 0, 0.749019607843137);
+  background-color: rgba(231, 231, 235, 1);
+  padding: 10px 7px;
+  border-radius: 3px;
+}
+.detail .project .item {
+  margin: 10px 0;
+}
+.detail .color-red {
+  color: rgba(217, 0, 27, 0.749019607843137);
+}
+.detail .request-url {
+  display: flex;
+}
+
+.detail .request-url .left {
+  width: 136px;
+}
+
+.operate {
+  width: 413px;
+  color: rgba(0, 0, 0, 0.647058823529412);
+}
+.operate .tip {
+  margin: 40px 0 15px 0;
+}
+.operate .content .ant-checkbox-group {
+  display: flex;
+  flex-direction: column;
+}
+.operate .content .ant-checkbox-group .ant-checkbox-wrapper {
+  margin: 8px 0;
+  color: rgba(0, 0, 0, 0.647058823529412);
+}
+.operate .content .ant-btn {
+  margin-top: 10px;
+  color: rgba(0, 0, 0, 0.647058823529412);
+}
+.operate .content .bottom {
+  display: flex;
+}
