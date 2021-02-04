@@ -1,11 +1,26 @@
-// import React, {useState, useEffect} from 'react'
-// import request from '../../config/request.js'
-// import qs from 'qs'
+import React, {useState, useEffect} from 'react'
+import request from '../../config/request.js'
+import { message } from 'antd';
+import qs from 'qs'
 import './index.css'
 
 // eslint-disable-next-line no-restricted-globals
-// const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+const query = qs.parse(location.search, { ignoreQueryPrefix: true })
 export default function Index() {
+  const [detail, setDetail] = useState([])
+  useEffect(() =>{
+    if(!query.id) {
+      message.error('参数错误')
+    }
+  })  
+  useEffect(() => {
+    getData()
+  },[])
+  const getData = async () => {
+    // 拿数据
+   let data = await  request.get(`/red/alert/exception/msg?id=${query.id}`)
+    setDetail(data?.data?.result)
+  }
   return (
     <div className='details'>
         <div className='title item'>项目预警</div>

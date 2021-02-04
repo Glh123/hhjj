@@ -107,8 +107,7 @@ export default function Index () {
     if(!query.id) {
       message.error('参数错误')
     }
-  }
-  )  
+  })  
   useEffect(() => {
     getData()
   },[])
