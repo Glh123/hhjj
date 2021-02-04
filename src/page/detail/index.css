@@ -1,0 +1,29 @@
+.details {
+  margin: 20px;
+  background-color: rgba(231, 231, 235, 1);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.749019607843137);
+  padding: 10px 0;
+  max-width: 1083px;
+}
+.details .item {
+  margin: 10px;
+  display: flex;
+}
+.details .item .left {
+  width: 122px;
+  margin-right: 10px;
+  word-break: break-all;
+}
+.details .item .right {
+  flex: 1;
+  word-break: break-all;
+}
+
+.details .color-red {
+  color: rgba(217, 0, 27, 0.749019607843137);
+}
+.details .color-blue {
+  color: rgba(0, 0, 255, 0.749019607843137);
+}
