@@ -1,89 +1,74 @@
 import { useEffect, useState } from 'react'
-import { getBanList } from './service'
-import { Table, Tag, Space } from 'antd';
-
-const columns = [
-  {
-    title: '序号',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: '推送机器人',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: '规则',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: '设定时间',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: tags => (
-      <>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: '结束时间',
-    key: 'action',
-    render: (text, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+import { getBanList, deleteItem } from './service'
+import { Table, message } from 'antd';
 
 export default function List () {
   const [dataSource, setDataSource] = useState([])
-  console.log('get', getBanList)
+
+  const deleteBan = (key) => {
+    deleteItem(key).then(res => {
+      message.success('删除成功')
+      getBanList().then(res => {
+        res.data.result.map((item, index) => {
+          item.index = index + 1
+          item.rules = [{ name: '项目名称', value: item.projectName }, { name: '异常类型', value: item.exceptionClass }, { name: '请求地址', value: item.url }]
+        })
+        setDataSource(res.data.result)
+      })
+    })
+  }
+
+  const columns = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      key: 'index'
+    },
+    {
+      title: '规则',
+      dataIndex: 'rules',
+      key: 'rules',
+      render: rules => (
+        <>
+          {
+            rules.map((rule, index) => (
+              <div key={index}>{rule.name}：{rule.value}</div>
+            ))
+          }
+        </>
+      )
+    },
+    {
+      title: '设定时间',
+      key: 'startTime',
+      dataIndex: 'startTime'
+    },
+    {
+      title: '结束时间',
+      dataIndex: 'endTime',
+      key: 'endTime'
+    },
+    {
+      title: '操作',
+      key: 'key',
+      dataIndex: 'key',
+      render: (key) => (
+        <span onClick={() => deleteBan(key)} style={{ color: 'red', cursor: 'pointer' }}>删除</span>
+      )
+    }
+  ];
+
   useEffect(() => {
     getBanList().then(res => {
-
+      res.data.result.map((item, index) => {
+        item.index = index + 1
+        item.rules = [{ name: '项目名称', value: item.projectName }, { name: '异常类型', value: item.exceptionClass }, { name: '请求地址', value: item.url }]
+      })
+      setDataSource(res.data.result)
     })
   }, [])
+
   return (
-    <Table columns={columns} dataSource={data} />
+    <Table style={{ marginTop: '80px' }} columns={columns} dataSource={dataSource} />
   )
 }
