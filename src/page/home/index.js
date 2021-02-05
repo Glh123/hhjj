@@ -69,7 +69,6 @@ const Operate = ({ props }) => {
       minutes: selectDate === '生效时间' ? '' : selectDate.indexOf('分') > -1 ? selectDate.slice(0, 2) : Number(selectDate.slice(0, 1)) * 60
     }
     const data = await request.post('/red/alert/nomore-notify', params)
-    console.log(data.data.success)
     if (data.data.success) {
       message.success('修改成功')
       props.history.push('/list')
@@ -102,7 +101,6 @@ const Operate = ({ props }) => {
 const Index = (props) => {
   const [detail, setDetail] = useState([])
   useEffect(() => {
-    console.log('pr', props)
     if (!query.id) {
       message.error('参数错误')
     }
