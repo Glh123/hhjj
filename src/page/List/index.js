@@ -6,7 +6,7 @@ export default function List () {
   const [dataSource, setDataSource] = useState([])
 
   const deleteBan = (key) => {
-    deleteItem(key).then(res => {
+    deleteItem({ key }).then(res => {
       message.success('删除成功')
       getBanList().then(res => {
         res.data.result.map((item, index) => {

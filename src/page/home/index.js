@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import request from '../../config/request.js'
 import { Checkbox, Menu, Dropdown, Button, message } from 'antd';
+import { withRouter } from 'react-router-dom'
 import './index.css'
 import 'antd/dist/antd.css'
 import qs from 'qs'
@@ -40,7 +41,7 @@ const Detail = ({ value }) => {
     </div>
   )
 }
-const Operate = () => {
+const Operate = ({ props }) => {
   const plainOptions = ['请求地址', '异常类型', '项目名称']
   const menu = (
     <Menu onClick={handleMenuClick}>
@@ -57,9 +58,9 @@ const Operate = () => {
     setCheckedList(list);
   }
   const save = async () => {
-    if(!checkedList.length) {
+    if (!checkedList.length) {
       message.error('至少选择一项')
-      return 
+      return
     }
     const params = {
       id: query.id,
@@ -72,6 +73,7 @@ const Operate = () => {
     console.log(data.data.success)
     if (data.data.success) {
       message.success('修改成功')
+      props.history.push('/list')
     } else {
       message.error('修改失败')
     }
@@ -98,10 +100,10 @@ const Operate = () => {
     </div>
   )
 }
-
-export default function Index () {
+const Index = (props) => {
   const [detail, setDetail] = useState([])
   useEffect(() => {
+    console.log('pr', props)
     if (!query.id) {
       message.error('参数错误')
     }
@@ -113,7 +115,7 @@ export default function Index () {
     // 拿数据
     let data = await request.get(`/red/alert/exception/msg?id=${query.id}`)
     setDetail(data?.data?.result)
-    if(data.success) {
+    if (data.success) {
       console.log(1111)
       message.success('修改成功')
     }
@@ -121,7 +123,9 @@ export default function Index () {
   return (
     <div className='all'>
       <Detail value={detail} />
-      <Operate />
+      <Operate props={props} />
     </div>
   )
 }
+
+export default withRouter(Index)
