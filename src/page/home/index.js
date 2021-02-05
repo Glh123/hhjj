@@ -51,7 +51,7 @@ const Operate = () => {
       }
     </Menu>
   );
-  const [checkedList, setCheckedList] = useState(['项目名称'])
+  const [checkedList, setCheckedList] = useState(['项目名称', '请求地址', '异常类型'])
   const [selectDate, setSelectData] = useState('15分钟')
   const onChange = list => {
     setCheckedList(list);
