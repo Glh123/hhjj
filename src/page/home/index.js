@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import request from '../../config/request.js'
 import { Checkbox, Menu, Dropdown, Button, message } from 'antd';
-import { withRouter } from 'react-router-dom'
 import './index.css'
 import 'antd/dist/antd.css'
 import qs from 'qs'
@@ -128,4 +127,4 @@ const Index = (props) => {
   )
 }
 
-export default withRouter(Index)
+export default Index
