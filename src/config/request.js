@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BaseUrl = 'http://9dgpvj.natappfree.cc'
+const BaseUrl = 'http://dscn5m.natappfree.cc'
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   get: (url) => axios.get(`${BaseUrl+url}`),
